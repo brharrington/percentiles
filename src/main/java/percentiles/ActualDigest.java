@@ -23,7 +23,8 @@ public class ActualDigest implements Digest {
 
   @Override
   public double percentile(double p) {
-    int i = (int) (values.size() * p);
+    double f = p / 100.0;
+    int i = (int) (values.size() * f);
     return values.get((i == values.size()) ? i - 1 : i);
   }
 }
