@@ -58,8 +58,4 @@ public class BucketDigest implements Digest {
     double f = (p - prevP) / (nextP - prevP);
     return f * (nextB - prevB) + prevB;
   }
-
-  public static long[] BUCKETS = {
-      1, 2, 3, 4, 5, 6, 7, 8, 9
-  };
 }
