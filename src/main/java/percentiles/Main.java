@@ -65,19 +65,30 @@ public class Main {
     }
   }
 
-  public static void main(String[] args) throws Exception {
+  private static Map<String, Digest> createDigestMap() {
     Map<String, Digest> digests = new HashMap<>();
     digests.put("actual", new ActualDigest());
     digests.put("tdigest", new T_Digest(100.0));
     digests.put("buckets", new BucketDigest(LongBuckets.BUCKET_VALUES));
+    return digests;
+  }
+
+  private static void process(String name) throws Exception {
+    System.out.printf("processing %s...%n", name);
+    Map<String, Digest> digests = createDigestMap();
     CompositeDigest digest = new CompositeDigest(digests);
 
     String path = "build/results/";
     File dir = new File(path);
     dir.mkdirs();
 
-    load(digest, "all.dat.gz");
+    load(digest, name + ".dat.gz");
     digest.complete();
-    write(digests, path + "all.dat");
+    write(digests, path + name + ".dat");
+  }
+
+  public static void main(String[] args) throws Exception {
+    process("healthcheck");
+    process("all");
   }
 }
