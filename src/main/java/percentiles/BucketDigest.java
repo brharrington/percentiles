@@ -58,4 +58,14 @@ public class BucketDigest implements Digest {
     double f = (p - prevP) / (nextP - prevP);
     return f * (nextB - prevB) + prevB;
   }
+
+  @Override
+  public String toString() {
+    int size = 0;
+    for (long c : counts) {
+      if (c > 0) ++size;
+    }
+    if (overflowCount > 0) ++size;
+    return "BucketDigest: size=" + size + ", bytes=" + (size * 8);
+  }
 }

@@ -27,4 +27,9 @@ public class ActualDigest implements Digest {
     int i = (int) (values.size() * f);
     return values.get((i == values.size()) ? i - 1 : i);
   }
+
+  @Override
+  public String toString() {
+    return "ActualDigest: size=" + values.size() + ", bytes=" + (values.size() * 8);
+  }
 }

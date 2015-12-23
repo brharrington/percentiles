@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.zip.GZIPInputStream;
 
@@ -30,7 +31,7 @@ public class Main {
     Digest actual = digests.remove("actual");
 
     try (PrintStream out = new PrintStream(new FileOutputStream(fname))) {
-      Set<String> keys = new TreeSet<>(digests.keySet());
+      Set<String> keys = digests.keySet();
 
       // Header
       out.print("percentile");
@@ -66,7 +67,7 @@ public class Main {
   }
 
   private static Map<String, Digest> createDigestMap() {
-    Map<String, Digest> digests = new HashMap<>();
+    Map<String, Digest> digests = new TreeMap<>();
     digests.put("actual", new ActualDigest());
     digests.put("tdigest", new T_Digest(100.0));
     digests.put("buckets", new BucketDigest(LongBuckets.BUCKET_VALUES));
@@ -84,6 +85,10 @@ public class Main {
 
     load(digest, name + ".dat.gz");
     digest.complete();
+    for (Map.Entry<String, Digest> entry : digests.entrySet()) {
+      System.out.printf("    - %s%n", entry.getValue());
+    }
+
     write(digests, path + name + ".dat");
   }
 

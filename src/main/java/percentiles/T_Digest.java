@@ -27,4 +27,9 @@ public class T_Digest implements Digest {
   public double percentile(double p) {
     return digest.quantile(p / 100.0);
   }
+
+  @Override
+  public String toString() {
+    return "T_Digest: bytes=" + digest.byteSize();
+  }
 }
