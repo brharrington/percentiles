@@ -19,7 +19,7 @@ public class BucketDigest implements Digest {
   @Override
   public void add(long v) {
     for (int i = 0; i < buckets.length; ++i) {
-      if (v < buckets[i]) {
+      if (v <= buckets[i]) {
         ++counts[i];
         return;
       }
