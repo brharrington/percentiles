@@ -6,11 +6,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.zip.GZIPInputStream;
 
 public class Main {
@@ -18,8 +16,12 @@ public class Main {
   private static void load(Digest digest, String name) throws Exception {
     try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(name)) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(in)));
+      long i = 0;
       String line;
       while ((line = reader.readLine()) != null) {
+        ++i;
+        if (i % 1_000_000 == 0) System.out.printf("    - %,15d%n", i);
+        if (i == 25_000_000) break;
         String[] parts = line.split("\\s");
         long v = Long.parseLong(parts[1]);
         digest.add(v);
@@ -71,6 +73,7 @@ public class Main {
     digests.put("actual", new ActualDigest());
     digests.put("tdigest", new T_Digest(100.0));
     digests.put("buckets", new BucketDigest(LongBuckets.BUCKET_VALUES));
+    digests.put("buckets2", new BucketDigest(LongBuckets2.BUCKET_VALUES));
     return digests;
   }
 
@@ -95,5 +98,7 @@ public class Main {
   public static void main(String[] args) throws Exception {
     process("healthcheck");
     process("all");
+    process("play-delay");
+    process("pd-6xx");
   }
 }
