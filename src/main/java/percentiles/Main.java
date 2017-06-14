@@ -1,14 +1,16 @@
 package percentiles;
 
+import com.netflix.spectator.api.histogram.PercentileBuckets;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.zip.GZIPInputStream;
 
 public class Main {
@@ -69,11 +71,13 @@ public class Main {
   }
 
   private static Map<String, Digest> createDigestMap() {
-    Map<String, Digest> digests = new TreeMap<>();
+    Map<String, Digest> digests = new LinkedHashMap<>();
     digests.put("actual", new ActualDigest());
     digests.put("tdigest", new T_Digest(100.0));
-    digests.put("buckets", new BucketDigest(LongBuckets.BUCKET_VALUES));
-    digests.put("buckets2", new BucketDigest(LongBuckets2.BUCKET_VALUES));
+    digests.put("spectator", new BucketDigest(PercentileBuckets.asArray()));
+    digests.put("pow2", new BucketDigest(LongBuckets.POWERS_OF_2));
+    digests.put("pow4", new BucketDigest(LongBuckets.POWERS_OF_4));
+    digests.put("local-avg", new LocalAvgDigest(() -> 131, new double[] { 10.0, 25.0, 50.0, 75.0, 90.0, 95.0, 99.0, 99.9 }));
     return digests;
   }
 
@@ -98,7 +102,7 @@ public class Main {
   public static void main(String[] args) throws Exception {
     process("healthcheck");
     process("all");
-    process("play-delay");
-    process("pd-6xx");
+    //process("play-delay");
+    //process("pd-6xx");
   }
 }

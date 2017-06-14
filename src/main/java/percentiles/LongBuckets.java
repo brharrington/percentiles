@@ -2,37 +2,19 @@ package percentiles;
 
 class LongBuckets {
 
-  private static final long[] GROUP_VALUES = {
-      10, 12, 14, 16, 18,
-      20, 22, 24, 26, 28,
-      30, 33, 36,
-      40, 44,
-      50,
-      60,
-      70,
-      80,
-      90
-  };
-
-  private static final int NUM_GROUPS = 17;
-
-  private static final int NUM_BUCKETS = 9 + NUM_GROUPS * GROUP_VALUES.length;
-
-  public static final long[] BUCKET_VALUES = new long[NUM_BUCKETS];
+  static final long[] POWERS_OF_2 = new long[63];
+  static final long[] POWERS_OF_4 = new long[31];
 
   static {
-    int pos = 0;
-
-    for (int i = 1; i < 10; ++i) {
-      BUCKET_VALUES[pos++] = i;
+    long v = 1;
+    for (int i = 0; i < POWERS_OF_2.length; ++i) {
+      POWERS_OF_2[i] = v << i;
     }
 
-    long exp = 1;
-    for (int i = 0; i < NUM_GROUPS; ++i) {
-      for (int j = 0; j < GROUP_VALUES.length; ++j) {
-        BUCKET_VALUES[pos++] = GROUP_VALUES[j] * exp;
-      }
-      exp *= 10;
+    v = 1;
+    for (int i = 0; i < POWERS_OF_4.length; ++i) {
+      long shift = 2 * i;
+      POWERS_OF_4[i] = v << shift;
     }
   }
 }
