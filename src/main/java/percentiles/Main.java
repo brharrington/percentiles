@@ -50,7 +50,7 @@ public class Main {
       out.println();
 
       // Percentiles
-      for (int i = 1; i <= 1000; ++i) {
+      for (int i = 200; i <= 1000; ++i) {
         double p = i / 10.0;
         double expected = actual.percentile(p);
         out.print(p);
@@ -75,9 +75,9 @@ public class Main {
     digests.put("actual", new ActualDigest());
     digests.put("tdigest", new T_Digest(100.0));
     digests.put("spectator", new BucketDigest(PercentileBuckets.asArray()));
-    digests.put("pow2", new BucketDigest(LongBuckets.POWERS_OF_2));
-    digests.put("pow4", new BucketDigest(LongBuckets.POWERS_OF_4));
-    digests.put("local-avg", new LocalAvgDigest(() -> 131, new double[] { 10.0, 25.0, 50.0, 75.0, 90.0, 95.0, 99.0, 99.9 }));
+    //digests.put("pow2", new BucketDigest(LongBuckets.POWERS_OF_2));
+    //digests.put("pow4", new BucketDigest(LongBuckets.POWERS_OF_4));
+    //digests.put("local-avg", new LocalAvgDigest(() -> 131, new double[] { 10.0, 25.0, 50.0, 75.0, 90.0, 95.0, 99.0, 99.9 }));
     return digests;
   }
 
