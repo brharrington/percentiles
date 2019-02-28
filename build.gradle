@@ -24,8 +24,8 @@ javadoc {
 }
 
 dependencies {
-  compile "com.netflix.spectator:spectator-api:0.55.0"
-  compile "com.tdunning:t-digest:3.1"
+  compile "com.netflix.spectator:spectator-api:0.86.0"
+  compile "com.tdunning:t-digest:3.2"
   compile "org.apache.commons:commons-math3:3.6"
   testCompile "junit:junit:4.12"
 }
