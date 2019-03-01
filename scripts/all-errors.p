@@ -3,4 +3,5 @@ set term png
 set output 'all-errors.png'
 plot 'build/results/all.dat' using 1:4 title 'tdigest' with lines, \
      'build/results/all.dat' using 1:6 title 'spectator' with lines, \
-     'build/results/all.dat' using 1:8 title 'float' with lines
+     'build/results/all.dat' using 1:8 title 'float' with lines, \
+     'build/results/all.dat' using 1:10 title 'log' with lines

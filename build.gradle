@@ -25,7 +25,9 @@ javadoc {
 
 dependencies {
   compile "com.netflix.spectator:spectator-api:0.86.0"
-  compile "com.tdunning:t-digest:3.2"
+  // No release for LogHistogram
+  //compile "com.tdunning:t-digest:3.2"
+  compile files("$projectDir/lib/t-digest-3.3-SNAPSHOT.jar")
   compile "org.apache.commons:commons-math3:3.6"
   testCompile "junit:junit:4.12"
 }
